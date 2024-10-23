@@ -1,12 +1,13 @@
 {
   "domain": "tank_level",
   "name": "Tank Level Processor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "requirements": [
     "opencv-python-headless==4.10.0.84",
     "scipy==1.14.1",
     "voluptuous"
   ],
+  "iot_class": "calculated",
   "dependencies": [],
   "codeowners": [
     "@stheid"
