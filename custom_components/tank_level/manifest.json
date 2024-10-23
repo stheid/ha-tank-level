@@ -1,7 +1,7 @@
 {
   "domain": "tank_level",
   "name": "Tank Level Processor",
-  "version": "1.0",
+  "version": "1.0.1",
   "requirements": [
     "opencv-python-headless==4.10.0.84",
     "scipy==1.14.1",
@@ -9,7 +9,7 @@
   ],
   "dependencies": [],
   "codeowners": [
-    "@yourgithubusername"
+    "@stheid"
   ],
   "config_flow": false
 }
