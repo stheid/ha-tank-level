@@ -1,6 +1,6 @@
 import logging
 
-import cv2
+from PIL import Image
 import numpy as np
 from scipy.signal import find_peaks
 
@@ -8,7 +8,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def process_image(image_path):
-    img = cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2GRAY)
+    img = np.array(Image.open(image_path))[:,:,0]
 
     # extract fill level
     k25 = int(img.shape[0] * 0.45)
