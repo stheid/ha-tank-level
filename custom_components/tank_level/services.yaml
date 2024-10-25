@@ -1,3 +1,7 @@
 process_snapshot:
-  description: "Process the tank level from the snapshot"
-  fields: {}
+  description: "Calculate the sensor value from an image"
+  fields:
+    image_file:
+      description: "The path to the image file"
+      example: "/path/to/image.jpg"
+      required: true

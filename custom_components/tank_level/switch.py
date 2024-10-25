@@ -6,14 +6,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class TankRefillSwitch(SwitchEntity):
-    def __init__(self, sensor):
-        self.sensor = sensor
-        self._name = "Refill Tank Level"
-        self._is_on = False
+    _attr_name = "Refill mode"
 
-    @property
-    def name(self):
-        return self._name
+    def __init__(self):
+        self._is_on = False
 
     @property
     def is_on(self):
@@ -22,11 +18,9 @@ class TankRefillSwitch(SwitchEntity):
     async def async_turn_on(self, **kwargs):
         """Turn the switch on."""
         self._is_on = True
-        self.sensor.enable_refill_mode()
-        _LOGGER.info("Refill mode switch turned on.")
+        _LOGGER.info("Refill mode enabled.")
 
     async def async_turn_off(self, **kwargs):
         """Turn the switch off."""
         self._is_on = False
-        self.sensor.disable_refill_mode()
-        _LOGGER.info("Refill mode switch turned off.")
+        _LOGGER.info("Refill mode disabled.")
