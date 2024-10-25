@@ -11,5 +11,5 @@
   "codeowners": [
     "@stheid"
   ],
-  "config_flow": false
+  "config_flow": true
 }
