@@ -1,8 +1,29 @@
 import logging
 
 from homeassistant.components.switch import SwitchEntity
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+
+from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def setup_platform(
+        hass: HomeAssistant,
+        config: ConfigType,
+        add_entities: AddEntitiesCallback,
+        discovery_info: DiscoveryInfoType | None = None
+) -> None:
+    """Set up the sensor platform."""
+    # We only want this platform to be set up via discovery.
+    if discovery_info is None:
+        return
+    add_entities([TankRefillSwitch()])
+    hass.data[DOMAIN] = {
+        "switch": TankRefillSwitch(),
+    }
 
 
 class TankRefillSwitch(SwitchEntity):
