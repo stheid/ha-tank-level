@@ -1,5 +1,6 @@
 import logging
 
+import voluptuous as vol
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.discovery import async_load_platform
 
@@ -23,7 +24,7 @@ async def async_setup_entry(hass, config_entry):
     return True  # Return True to indicate success
 
 
-async def setup_integration(hass, config_data, vol=None):
+async def setup_integration(hass, config_data):
     """Common setup logic for both async_setup and async_setup_entry."""
     # Store the configuration values
     hass.data[DOMAIN] = {
