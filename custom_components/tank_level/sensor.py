@@ -1,6 +1,7 @@
 import logging
 
 from homeassistant.components.sensor import SensorEntity, SensorStateClass, SensorDeviceClass
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfVolume
 from homeassistant.core import DOMAIN, HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -9,24 +10,38 @@ from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform(
-        hass: HomeAssistant,
-        config: ConfigType,
-        add_entities: AddEntitiesCallback,
-        discovery_info: DiscoveryInfoType | None = None
+async def async_setup_platform(
+    hass: HomeAssistant,
+    config: ConfigType,
+    async_add_entities: AddEntitiesCallback,
+    discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
-    """Set up the sensor platform."""
-    # We only want this platform to be set up via discovery.
-    if discovery_info is None:
-        return
-    add_entities([TankLevelSensor(hass)])
+    sensor = TankLevelSensor(hass)
+    async_add_entities([sensor])
+    hass.data[DOMAIN] = {
+        "sensor": sensor,
+    }
+
+
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    sensor = TankLevelSensor(hass)
+    async_add_entities([sensor])
+    hass.data[DOMAIN] = {
+        "sensor": sensor,
+    }
+
+
 
 
 class TankLevelSensor(SensorEntity):
     _attr_name = "Volume"
     _attr_native_unit_of_measurement = UnitOfVolume.LITERS
     _attr_device_class = SensorDeviceClass.VOLUME
-    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_state_class = SensorStateClass.TOTAL
 
     def __init__(self, hass):
         self.hass = hass

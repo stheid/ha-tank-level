@@ -1,6 +1,7 @@
 import logging
 
 from homeassistant.components.switch import SwitchEntity
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
@@ -10,17 +11,26 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_platform(
+async def async_setup_platform(
         hass: HomeAssistant,
         config: ConfigType,
-        add_entities: AddEntitiesCallback,
-        discovery_info: DiscoveryInfoType | None = None
+        async_add_entities: AddEntitiesCallback,
+        discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
-    """Set up the sensor platform."""
-    # We only want this platform to be set up via discovery.
-    if discovery_info is None:
-        return
-    add_entities([TankRefillSwitch()])
+    """Set up MoldIndicator sensor."""
+    async_add_entities([TankRefillSwitch()])
+    hass.data[DOMAIN] = {
+        "switch": TankRefillSwitch(),
+    }
+
+
+async def async_setup_entry(
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        async_add_entities: AddEntitiesCallback,
+) -> None:
+    """Set up the Mold indicator sensor entry."""
+    async_add_entities([TankRefillSwitch()])
     hass.data[DOMAIN] = {
         "switch": TankRefillSwitch(),
     }

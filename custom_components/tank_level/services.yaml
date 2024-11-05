@@ -1,7 +1,9 @@
 process_snapshot:
   description: "Calculate the sensor value from an image"
   fields:
-    image_file:
+    image_path:
       description: "The path to the image file"
       example: "/path/to/image.jpg"
       required: true
+      selector:
+        text:
