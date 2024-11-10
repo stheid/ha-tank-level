@@ -43,6 +43,10 @@ class TankRefillSwitch(SwitchEntity):
         self._is_on = False
 
     @property
+    def unique_id(self):
+        return f"{DOMAIN}_{self.name.lower()}"
+
+    @property
     def is_on(self):
         return self._is_on
 

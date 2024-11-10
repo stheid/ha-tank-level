@@ -13,18 +13,12 @@ def configured_instances(hass):
 
 class TankLevelConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 0
-    MINOR_VERSION = 3
+    MINOR_VERSION = 4
 
     async def async_step_user(self, user_input=None):
-        """Handle the initial step."""
-        errors = {}
-
         if user_input is not None:
             # Validate input
-            return self.async_create_entry(
-                title="Tank Level Sensor",
-                data=user_input,
-            )
+            return self.async_create_entry(title="Tank Level Sensor", data=user_input)
 
         # Schema for the user input fields
         data_schema = vol.Schema({
@@ -35,5 +29,5 @@ class TankLevelConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user",
             data_schema=data_schema,
-            errors=errors,
+            errors={},
         )

@@ -23,15 +23,13 @@ async def async_setup_entry(hass, config_entry):
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
 
     async def process_tank_level_service(call):
-        image_path = call.data.get("image_path")
+        image_path = call.data.get("image_path").template
         if not image_path:
             _LOGGER.error("Service call error: 'image_path' is required.")
             return
-
         try:
-            sensor = hass.data[DOMAIN]['sensor']
             level = await hass.async_add_executor_job(process_image, image_path)
-            sensor.update_level(level)
+            hass.data[DOMAIN]['sensor'].update_level(level)
 
         except Exception as e:
             _LOGGER.error(f"Error processing tank level: {e}")

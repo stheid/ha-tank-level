@@ -3,18 +3,20 @@ import logging
 from homeassistant.components.sensor import SensorEntity, SensorStateClass, SensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfVolume
-from homeassistant.core import DOMAIN, HomeAssistant
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+
+from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_platform(
-    hass: HomeAssistant,
-    config: ConfigType,
-    async_add_entities: AddEntitiesCallback,
-    discovery_info: DiscoveryInfoType | None = None,
+        hass: HomeAssistant,
+        config: ConfigType,
+        async_add_entities: AddEntitiesCallback,
+        discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
     sensor = TankLevelSensor(hass)
     async_add_entities([sensor])
@@ -24,17 +26,15 @@ async def async_setup_platform(
 
 
 async def async_setup_entry(
-    hass: HomeAssistant,
-    entry: ConfigEntry,
-    async_add_entities: AddEntitiesCallback,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        async_add_entities: AddEntitiesCallback,
 ) -> None:
     sensor = TankLevelSensor(hass)
     async_add_entities([sensor])
     hass.data[DOMAIN] = {
         "sensor": sensor,
     }
-
-
 
 
 class TankLevelSensor(SensorEntity):
@@ -47,14 +47,18 @@ class TankLevelSensor(SensorEntity):
         self.hass = hass
 
     @property
+    def unique_id(self):
+        return f"{DOMAIN}_{self.name.lower()}"
+
+    @property
     def refill_threshold(self):
         """Fetch the plausibility threshold from the integration config."""
-        return self.hass.data["tank_level"]["refill_threshold"]
+        return self.hass.data[DOMAIN]["refill_threshold"]
 
     @property
     def plausibility_threshold(self):
         """Fetch the plausibility threshold from the integration config."""
-        return self.hass.data["tank_level"]["plausibility_threshold"]
+        return self.hass.data[DOMAIN]["plausibility_threshold"]
 
     @property
     def _refill_mode(self):
