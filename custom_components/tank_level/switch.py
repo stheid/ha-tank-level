@@ -17,11 +17,9 @@ async def async_setup_platform(
         async_add_entities: AddEntitiesCallback,
         discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
-    """Set up MoldIndicator sensor."""
-    async_add_entities([TankRefillSwitch()])
-    hass.data[DOMAIN] = {
-        "switch": TankRefillSwitch(),
-    }
+    switch = TankRefillSwitch()
+    async_add_entities([switch])
+    hass.data[DOMAIN]["switch"] = switch
 
 
 async def async_setup_entry(
@@ -29,11 +27,9 @@ async def async_setup_entry(
         entry: ConfigEntry,
         async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up the Mold indicator sensor entry."""
-    async_add_entities([TankRefillSwitch()])
-    hass.data[DOMAIN] = {
-        "switch": TankRefillSwitch(),
-    }
+    switch = TankRefillSwitch()
+    async_add_entities([switch])
+    hass.data[DOMAIN]["switch"] = switch
 
 
 class TankRefillSwitch(SwitchEntity):

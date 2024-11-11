@@ -20,9 +20,7 @@ async def async_setup_platform(
 ) -> None:
     sensor = TankLevelSensor(hass)
     async_add_entities([sensor])
-    hass.data[DOMAIN] = {
-        "sensor": sensor,
-    }
+    hass.data[DOMAIN]["sensor"] = sensor
 
 
 async def async_setup_entry(
@@ -32,9 +30,7 @@ async def async_setup_entry(
 ) -> None:
     sensor = TankLevelSensor(hass)
     async_add_entities([sensor])
-    hass.data[DOMAIN] = {
-        "sensor": sensor,
-    }
+    hass.data[DOMAIN]["sensor"] = sensor
 
 
 class TankLevelSensor(SensorEntity):
