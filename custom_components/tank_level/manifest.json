@@ -1,9 +1,9 @@
 {
   "domain": "tank_level",
   "name": "Tank Level Processor",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "requirements": [
-    "pillow==10.4.0",
+    "pillow",
     "voluptuous"
   ],
   "iot_class": "calculated",
